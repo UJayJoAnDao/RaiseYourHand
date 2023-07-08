@@ -1,28 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <style>
+        /* container for titles */
+        body {
+            background-color: #D9D9D9;
+            font-family: "consolas", "微軟正黑體";
+
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #titles-container {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #subtitle {
+            font-size: 12px;
+            font-weight: light;
+        }
+
+        /* container for 選擇現有教室區域 */
+        #choose-exist-classrooms-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #choose-exist-classrooms-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #choose-exist-classroom-numbers-container {
+            width: 60%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .classroom-number {
+            background-color: #000;
+            color: #D9D9D9;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin: 10px;
+
+            width: 25%;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .classroom-number:hover {
+            cursor: pointer;
+            background-color: #3b3b3b;
+        }
+
+        /* 水平分隔線 */
+        hr {
+            width: 80%;
+            margin: 20px;
+            border: 1px solid #565656;
+        }
+
+        /* container for 建立新教室區域 */
+        #create-new-classrooms-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #create-new-classrooms-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #create-new-classrooms-function-container {
+            width: 30%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #create-new-classrooms-function-container-left {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #random-classroom-number-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #random-classroom-number {
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-bottom: 10px;
+
+            width: 80%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #create-new-classrooms-function-container-right {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #student-list-textarea {
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 16px;
+            border-radius: 5px;
+            border-style: none;
+            margin-bottom: 10px;
+            padding: 10px 10px;
+
+            width: 80%;
+            height: 200px;
+
+            resize: none;
+        }
+
+        #student-list-textarea:focus {
+            outline: none;
+        }
+
+        #create-new-classroom-button {
+            background-color: #000;
+            color: #D9D9D9;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin: 10px;
+
+            width: 20%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #create-new-classroom-button:hover {
+            cursor: pointer;
+            background-color: #3b3b3b;
+        }
+
+    </style>
     <title>老師登入頁面</title>
 </head>
+
 <body>
-    <!-- page title 「Raise Your 🖐」 -->
-    <!-- page subtitle 「For Teacher」 -->
+    <!-- container for titles -->
+    <div id="titles-container">
+        <!-- page title 「Raise Your 🖐」 -->
+        <div id="title">Raise Your 🖐</div>
+        <!-- page subtitle 「For Teacher」 -->
+        <div id="subtitle">For Teacher</div>
+    </div>
 
     <!-- container for 選擇現有教室區域 -->
+    <div id="choose-exist-classrooms-container">
         <!-- title for 選擇現有教室區域 -->
-        <!-- container for 可選擇的教室編號，3 欄 1 列 -->
-        
+        <div id="choose-exist-classrooms-title">選擇現有教室</div>
+        <!-- container for 可選擇的教室編號 -->
+        <div id="choose-exist-classroom-numbers-container">
+            <!-- 多個 6 位數編號區塊，區塊分布為 3 欄 1 列 -->
+            <div class="classroom-number">450126</div>
+            <div class="classroom-number">512636</div>
+            <div class="classroom-number">246122</div>
+            <div class="classroom-number">123456</div>
+            <div class="classroom-number">234567</div>
+            <div class="classroom-number">345678</div>
+        </div>
+    </div>
+
     <!-- 水平分隔線 -->
+    <hr>
 
     <!-- container for 建立新教室區域 -->
+    <div id="create-new-classrooms-container">
         <!-- title for 建立新教室區域 -->
+        <div id="create-new-classrooms-title">建立新教室</div>
         <!-- container for 建立新教室的功能 -->
+        <div id="create-new-classrooms-function-container">
             <!-- container 左方區塊 -->
+            <div id="create-new-classrooms-function-container-left">
                 <!-- title 「隨機教室 ID」 -->
+                <div id="random-classroom-number-title">隨機教室 ID</div>
                 <!-- 隨機教室 ID 展示 -->
+                <div id="random-classroom-number">345678</div>
+            </div>
             <!-- container 右方區塊 -->
+            <div id="create-new-classrooms-function-container-right">
                 <!-- 學生名單輸入框 -->
+                <textarea
+                    id="student-list-textarea"
+                    placeholder="請輸入學生名單"
+                ></textarea>
+            </div>
+        </div>
         <!-- button 「新建教室」 -->
+        <input
+            id="create-new-classroom-button"
+            type="button"
+            value="新建教室"
+        >
+    </div>
 </body>
+
 </html>
