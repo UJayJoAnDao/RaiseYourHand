@@ -11,21 +11,26 @@
         }
         body{
             background-color: #D9D9D9;
-            /* css左右等寬且在中間 */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100%;
         }
+        
         .student-classroom-page{
-            /* border: #000000 1px solid; */
             align-items: center;
             width: 90%;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            /* padding: 0 20px; */
+            padding: 0 20px;
+        }
+        .student-classroom-page .h2{
+            align-self: flex-start;
+            position: relative;
+            top: 0;
+            left: 10%;
         }
         .navbar{
             display: flex;
@@ -36,7 +41,7 @@
         h1{
             /* border: #000000 1px solid; */
             font-size: 35px;
-            font-weight: bold;
+            font-weight: bolder;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -56,7 +61,8 @@
             border-radius: 10px;
             padding: 0 15px;
             margin: 10px 5px;
-            font-size: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
         .content{
             border: #000000 1px solid;
@@ -68,8 +74,8 @@
             width: 80%;
         }
         .h2{
-            border: #000000 1px solid;
-            font-size: 25px;
+            display: flex;
+            font-size: 28px;
             font-weight: bold;
             padding: 0px;
             margin: 20px 0 5px 0;
@@ -99,7 +105,6 @@
             background-color: #FFC93F;
         }
         input[type=button]{
-            /* border: #000000 1px solid; */
             width: 80%;
             display: flex;
             justify-content: center;
@@ -111,6 +116,10 @@
             font-size: 30px;
             font-weight: bolder;
             color: #FFFFFF;
+            border: none;
+        }
+        input[type=button].active{
+            background-color: #093F8F;
         }
     </style>
 </head>
@@ -148,7 +157,7 @@
                 <div>李棒</div>
             </div>
         </div>
-        <input type="button" value="我要舉手">
+        <input type="button" value="我要舉手" class="btn">
     </div>
 </body>
 </html>
