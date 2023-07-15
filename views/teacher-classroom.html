@@ -8,12 +8,65 @@
         content="width=device-width, initial-scale=1.0"
     >
     <title>老師教室頁面</title>
+    <style>
+        body {
+            background-color: #D9D9D9;
+            font-family: "consolas", "微軟正黑體";
+
+            margin: 0;
+            padding: 0;
+        }
+
+        /* navigator container */
+        #navigator-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        #titles-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-left: 20px;
+        }
+
+        #title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #subtitle {
+            font-size: 12px;
+            font-weight: light;
+        }
+
+        #current-classroom-number {
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+
+            width: 15vw;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <!-- navigator container -->
-    <div>
-        <!-- left navigator container -->
+    <div id="navigator-container">
+        <!-- titles container -->
         <div id="titles-container">
             <!-- page title 「Raise Your 🖐」 -->
             <div id="title">Raise Your 🖐</div>
@@ -22,6 +75,7 @@
         </div>
         <!-- right navigator container -->
             <!-- 班級代號區塊 -->
+            <div id="current-classroom-number">128126</div>
     </div>
 
     <!-- content container -->
