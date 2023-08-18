@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
     <title>學生教室</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        body{
+
+        body {
             background-color: #D9D9D9;
             display: flex;
             flex-direction: column;
@@ -17,8 +22,8 @@
             align-items: center;
             height: 100%;
         }
-        
-        .student-classroom-page{
+
+        .student-classroom-page {
             align-items: center;
             width: 90%;
             display: flex;
@@ -26,19 +31,22 @@
             justify-content: flex-start;
             padding: 0 20px;
         }
-        .student-classroom-page .h2{
+
+        .student-classroom-page .h2 {
             align-self: flex-start;
             position: relative;
             top: 0;
             left: 10%;
         }
-        .navbar{
+
+        .navbar {
             display: flex;
             justify-content: space-between;
             width: 100%;
             /* border: #000000 1px solid; */
         }
-        h1{
+
+        h1 {
             /* border: #000000 1px solid; */
             font-size: 35px;
             font-weight: bolder;
@@ -47,12 +55,15 @@
             justify-content: center;
 
         }
-        .myinfo{
+
+        .myinfo {
             display: flex;
             justify-content: flex-end;
             /* border: #000000 1px solid; */
         }
-        .myclass, .myname{
+
+        .myclass,
+        .myname {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -64,7 +75,8 @@
             font-size: 24px;
             font-weight: bold;
         }
-        .content{
+
+        .content {
             border: #000000 1px solid;
             display: flex;
             flex-direction: column;
@@ -73,22 +85,27 @@
             background-color: #1C1C1C;
             width: 80%;
         }
-        .h2{
+
+        .h2 {
             display: flex;
             font-size: 28px;
             font-weight: bold;
             padding: 0px;
             margin: 20px 0 5px 0;
         }
-        
-        .queue{
+
+        .queue {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /*設定 Grid 為6欄，每欄寬度為六分之一。 等同於 grid-template-columns: 1fr 1fr 1fr 1fr*/
-            column-gap: 20px; /* 設定欄位間的左右間距 (不含最左/最右) */
-            row-gap: 10px; /* 設定欄位間上下間距 (不含最上/最下) */
+            grid-template-columns: repeat(6, 1fr);
+            /*設定 Grid 為6欄，每欄寬度為六分之一。 等同於 grid-template-columns: 1fr 1fr 1fr 1fr*/
+            column-gap: 20px;
+            /* 設定欄位間的左右間距 (不含最左/最右) */
+            row-gap: 10px;
+            /* 設定欄位間上下間距 (不含最上/最下) */
             padding: 20px 25px;
         }
-        .queue div{
+
+        .queue div {
             /* height: 30px; */
             display: flex;
             justify-content: center;
@@ -100,29 +117,33 @@
             font-weight: bolder;
             color: #FFFFFF;
         }
-        .queue div:first-child{
+
+        .queue div:first-child {
             color: #000000;
             background-color: #FFC93F;
         }
-        input[type=button]{
+
+        input[type=button] {
             width: 80%;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 10px 15px;
             margin: 35px 0;
-            border-radius: 30px; 
+            border-radius: 30px;
             background-color: #000000;
             font-size: 30px;
             font-weight: bolder;
             color: #FFFFFF;
             border: none;
         }
-        input[type=button].active{
+
+        input[type=button].active {
             background-color: #093F8F;
         }
     </style>
 </head>
+
 <body>
     <div class="student-classroom-page">
         <div class="navbar">
@@ -157,7 +178,12 @@
                 <div>李棒</div>
             </div>
         </div>
-        <input type="button" value="我要舉手" class="btn">
+        <input
+            type="button"
+            value="我要舉手"
+            class="btn"
+        >
     </div>
 </body>
+
 </html>

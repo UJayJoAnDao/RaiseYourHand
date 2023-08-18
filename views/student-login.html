@@ -1,17 +1,20 @@
 <html>
+
 <head>
     <title>學生登入</title>
     <meta charset="utf-8">
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
+
         body {
             background-color: #D9D9D9;
             display: flex;
             justify-content: center;
         }
+
         .student-login-page {
             margin: 10px auto;
             border-radius: 10px;
@@ -20,6 +23,7 @@
             align-items: center;
             justify-content: center;
         }
+
         h1 {
             text-align: center;
             font-size: 45px;
@@ -27,6 +31,7 @@
             margin: 0;
             padding: 0;
         }
+
         .form-group {
             margin: 100px auto;
             padding: 0px;
@@ -35,14 +40,18 @@
             justify-content: center;
             font-weight: bold;
         }
-        .ID-box , .name-box{
+
+        .ID-box,
+        .name-box {
             font-size: 20px;
             display: flex;
-            justify-content:flex-end;
+            justify-content: flex-end;
             margin: 0px 0px 0px 0px;
             padding: 5px 0 5px 0;
         }
-        .ID , .name{
+
+        .ID,
+        .name {
             margin: 0 0 0 20px;
             height: 30px;
             width: 150px;
@@ -52,6 +61,7 @@
             border: none;
             box-shadow: 2px 3px 5px 0.5px #888888;
         }
+
         input[type=button] {
             display: block;
             background-color: #000000;
@@ -65,13 +75,18 @@
         }
     </style>
 </head>
+
 <body>
     <div class="student-login-page">
         <h1>Raise Your 🖐</h1>
         <div class="form-group">
             <div class="ID-box">
                 <label for="ID">輸入教室 ID</label>
-                <input type="number" class="ID" value="128126">    
+                <input
+                    type="number"
+                    class="ID"
+                    value="128126"
+                >
             </div>
             <div class="name-box">
                 <label for="name">選擇你的姓名</label>
@@ -82,7 +97,23 @@
                 </select>
             </div>
         </div>
-        <input type="button" value="加入教室">
+        <input
+            type="button"
+            value="加入教室"
+        >
     </div>
+    <script
+        src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js'
+        integrity='sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=='
+        crossorigin='anonymous'
+    ></script>
+    <script>
+        let socket = io();
+
+        socket.on('connected', (obj) => {
+            console.log(`${obj.id}: ${obj.message}`);
+        });
+    </script>
 </body>
+
 </html>
