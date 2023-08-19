@@ -109,8 +109,14 @@ function createClassroom() { }
 
 function createRandomClassroomID() {
     // 產生 6 個數字的隨機數字並回傳
-    return Math.floor(Math.random() * 1000000)
+    let rand6Num = Math.floor(Math.random() * 1000000)
         .toString().padStart(6, '0');
+    while (classroomInfo[rand6Num] !== undefined) {
+        // 若 classroomInfo 中已存在此 classroomID，則重新產生
+        rand6Num = Math.floor(Math.random() * 1000000)
+            .toString().padStart(6, '0');
+    }
+    return rand6Num;
 }
 
 function getAvailableClassroom() {
