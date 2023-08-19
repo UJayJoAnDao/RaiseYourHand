@@ -256,10 +256,15 @@
         crossorigin='anonymous'
     ></script>
     <script>
-        let socket = io();
+        const socket = io();
+        let myID = '';
 
         socket.on('connected', (obj) => {
-            console.log(`${obj.id}: ${obj.message}`);
+            if (myID === '') {
+                console.log(`${obj.id}: ${obj.message}`);
+                myID = obj.id;
+                console.log(myID);
+            }
         });
     </script>
 </body>
