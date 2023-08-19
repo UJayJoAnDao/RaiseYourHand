@@ -150,6 +150,13 @@ app.get('/TEACHer', (req, res) => {
     res.sendFile(__dirname + '/views/teacher-login.html');
 });
 
+/* 設定教室頁面路由 */
+app.get('/student/:classroomID', (req, res) => { /* TODO */ });
+
+app.get('/TEACHer/:classroomID', (req, res) => {
+    res.sendFile(__dirname + '/views/teacher-classroom.html');
+});
+
 /* 設定 socket.io 相關監聽事件 */
 io.on('connection', (socket) => {
     // 若某 socket 連線，則印出訊息，並回傳該 socket 的 ID 與對應訊息
