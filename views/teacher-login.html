@@ -209,12 +209,7 @@
         <!-- container for 可選擇的教室編號 -->
         <div id="choose-exist-classroom-numbers-container">
             <!-- 多個 6 位數編號區塊，區塊分布為 3 欄 1 列 -->
-            <div class="classroom-number">450126</div>
-            <div class="classroom-number">512636</div>
-            <div class="classroom-number">246122</div>
-            <div class="classroom-number">123456</div>
-            <div class="classroom-number">234567</div>
-            <div class="classroom-number">345678</div>
+            <!-- <div class="classroom-number"></div> -->
         </div>
     </div>
 
@@ -266,6 +261,7 @@
                 console.log(myID);
                 // 當確認老師頁面連線成功後，向 server 端發送訊息以取得一組隨機教室 ID
                 socket.emit('create-random-classroom-id', { id: myID });
+                socket.emit('get-available-classroom', { id: myID });
             }
         });
         socket.on('create-random-classroom-id', (obj) => {
@@ -273,6 +269,20 @@
             if (obj.id === myID) {
                 // 將隨機教室 ID 顯示在頁面上
                 document.querySelector('#random-classroom-number').innerText = obj.randomClassroomID;
+            }
+        });
+        socket.on('get-available-classroom', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                // 將可選擇的教室編號顯示在頁面上
+                const chooseExistClassroomNumbersContainer = document.querySelector('#choose-exist-classroom-numbers-container');
+                chooseExistClassroomNumbersContainer.innerHTML = '';
+                for (let i = 0; i < obj.classroomIDs.length; i++) {
+                    const classroomNumber = document.createElement('div');
+                    classroomNumber.classList.add('classroom-number');
+                    classroomNumber.innerText = obj.classroomIDs[i];
+                    chooseExistClassroomNumbersContainer.appendChild(classroomNumber);
+                }
             }
         });
     </script>

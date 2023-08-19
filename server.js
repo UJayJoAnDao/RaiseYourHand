@@ -113,7 +113,10 @@ function createRandomClassroomID() {
         .toString().padStart(6, '0');
 }
 
-function getAvailableClassroom() { }
+function getAvailableClassroom() {
+    // 整理出目前在 classroomInfo 中 所有可用教室的 ID
+    return Object.keys(classroomInfo);
+}
 
 /* 設定登入頁面路由 */
 app.get('/student', (req, res) => {
@@ -154,6 +157,14 @@ io.on('connection', (socket) => {
         let resultObj = { id: socket.id, randomClassroomID: createRandomClassroomID() };
         // 回傳訊息
         io.emit('create-random-classroom-id', resultObj);
+    });
+
+    // 處理 get-available-classroom 事件
+    socket.on('get-available-classroom', () => {
+        // 預設回傳的物件
+        let resultObj = { id: socket.id, classroomIDs: getAvailableClassroom() };
+        // 回傳訊息
+        io.emit('get-available-classroom', resultObj);
     });
 });
 
