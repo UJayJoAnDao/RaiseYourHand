@@ -293,6 +293,27 @@
                 }
             }
         });
+        socket.on('create-classroom', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                // 向使用者們更新可選擇的教室編號
+                socket.emit('get-available-classroom', { id: myID });
+                // TODO: 跳轉至教室頁面，路由為 /TEACHer/:obj.classroomID
+                alert(`${obj.classroomID} 教室已建立，請前往教室頁面`);
+            }
+        });
+
+        // 點擊「新建教室」按鈕時，向 server 端發送訊息以建立新教室
+        document.querySelector('#create-new-classroom-button').addEventListener('click', () => {
+            const studentListTextarea = document.querySelector('#student-list-textarea');
+            const studentNames = studentListTextarea.value.split('\n');
+            const randomClassroomID = document.querySelector('#random-classroom-number').innerText;
+            socket.emit('create-classroom', {
+                id: myID,
+                classroomID: randomClassroomID,
+                studentNames: studentNames
+            });
+        });
     </script>
 </body>
 

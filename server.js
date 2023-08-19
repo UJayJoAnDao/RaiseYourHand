@@ -105,7 +105,24 @@ function verifyClassroomID(classroomID) {
 }
 
 /* Communicate with teacher-login.html */
-function createClassroom() { }
+function createClassroom(classroomID, studentNames) {
+    // 於 classroomInfo 中新增一個教室，並初始化學生資訊
+    let studentInfo = [];
+    for (let i = 0; i < studentNames.length; i++) {
+        studentInfo.push({
+            "socketID": null,
+            "name": studentNames[i],
+            "isInClassroom": false,
+            "queueNo": -1,
+            "done": false,
+        });
+    }
+
+    // 將 classroomID 與學生資訊陣列加入 classroomInfo 中
+    classroomInfo[classroomID] = studentInfo;
+
+    return classroomID;
+}
 
 function createRandomClassroomID() {
     // 產生 6 個數字的隨機數字並回傳
@@ -171,6 +188,17 @@ io.on('connection', (socket) => {
         let resultObj = { id: socket.id, classroomIDs: getAvailableClassroom() };
         // 回傳訊息
         io.emit('get-available-classroom', resultObj);
+    });
+
+    // 處理 create-classroom 事件
+    socket.on('create-classroom', (obj) => {
+        // 預設回傳的物件
+        let resultObj = {
+            id: socket.id,
+            classroomID: createClassroom(obj.classroomID, obj.studentNames)
+        };
+        // 回傳訊息
+        io.emit('create-classroom', resultObj);
     });
 });
 
