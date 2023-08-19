@@ -232,7 +232,7 @@
                 <!-- title 「隨機教室 ID」 -->
                 <div id="random-classroom-number-title">隨機教室 ID</div>
                 <!-- 隨機教室 ID 展示 -->
-                <div id="random-classroom-number">345678</div>
+                <div id="random-classroom-number"></div>
             </div>
             <!-- container 右方區塊 -->
             <div id="create-new-classrooms-function-container-right">
@@ -264,6 +264,15 @@
                 console.log(`${obj.id}: ${obj.message}`);
                 myID = obj.id;
                 console.log(myID);
+                // 當確認老師頁面連線成功後，向 server 端發送訊息以取得一組隨機教室 ID
+                socket.emit('create-random-classroom-id', { id: myID });
+            }
+        });
+        socket.on('create-random-classroom-id', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                // 將隨機教室 ID 顯示在頁面上
+                document.querySelector('#random-classroom-number').innerText = obj.randomClassroomID;
             }
         });
     </script>

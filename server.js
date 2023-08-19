@@ -107,7 +107,11 @@ function verifyClassroomID(classroomID) {
 /* Communicate with teacher-login.html */
 function createClassroom() { }
 
-function createRandomClassroomID() { }
+function createRandomClassroomID() {
+    // 產生 6 個數字的隨機數字並回傳
+    return Math.floor(Math.random() * 1000000)
+        .toString().padStart(6, '0');
+}
 
 function getAvailableClassroom() { }
 
@@ -142,6 +146,14 @@ io.on('connection', (socket) => {
 
         // 回傳訊息
         io.emit('verify-classroom-id', resultObj);
+    });
+
+    // 處理 create-random-classroom-id 事件
+    socket.on('create-random-classroom-id', () => {
+        // 預設回傳的物件
+        let resultObj = { id: socket.id, randomClassroomID: createRandomClassroomID() };
+        // 回傳訊息
+        io.emit('create-random-classroom-id', resultObj);
     });
 });
 
