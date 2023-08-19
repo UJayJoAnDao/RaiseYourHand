@@ -272,25 +272,22 @@
             }
         });
         socket.on('get-available-classroom', (obj) => {
-            // 如果 obj.id === myID，則代表此訊息是要傳給我
-            if (obj.id === myID) {
-                const chooseExistClassroomNumbersContainer = document.querySelector('#choose-exist-classroom-numbers-container');
-                chooseExistClassroomNumbersContainer.innerHTML = '';
-                if (obj.classroomIDs.length > 0) {
-                    // 將可選擇的教室編號顯示在頁面上
-                    for (let i = 0; i < obj.classroomIDs.length; i++) {
-                        const classroomNumber = document.createElement('div');
-                        classroomNumber.classList.add('classroom-number');
-                        classroomNumber.innerText = obj.classroomIDs[i];
-                        chooseExistClassroomNumbersContainer.appendChild(classroomNumber);
-                    }
-                } else {
-                    // 顯示「無可選擇的教室」
+            const chooseExistClassroomNumbersContainer = document.querySelector('#choose-exist-classroom-numbers-container');
+            chooseExistClassroomNumbersContainer.innerHTML = '';
+            if (obj.classroomIDs.length > 0) {
+                // 將可選擇的教室編號顯示在頁面上
+                for (let i = 0; i < obj.classroomIDs.length; i++) {
                     const classroomNumber = document.createElement('div');
                     classroomNumber.classList.add('classroom-number');
-                    classroomNumber.innerText = '無可選擇的教室';
+                    classroomNumber.innerText = obj.classroomIDs[i];
                     chooseExistClassroomNumbersContainer.appendChild(classroomNumber);
                 }
+            } else {
+                // 顯示「無可選擇的教室」
+                const classroomNumber = document.createElement('div');
+                classroomNumber.classList.add('classroom-number');
+                classroomNumber.innerText = '無可選擇的教室';
+                chooseExistClassroomNumbersContainer.appendChild(classroomNumber);
             }
         });
         socket.on('create-classroom', (obj) => {
