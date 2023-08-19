@@ -85,15 +85,13 @@
                 <input
                     type="number"
                     class="ID"
-                    value="128126"
+                    value=""
                 >
             </div>
             <div class="name-box">
                 <label for="name">選擇你的姓名</label>
                 <select class="name">
-                    <option value=""></option>
-                    <option value="張猛">張猛</option>
-                    <option value="王大頭">王大頭</option>
+                    <!-- <option value=""></option> -->
                 </select>
             </div>
         </div>
@@ -108,10 +106,49 @@
         crossorigin='anonymous'
     ></script>
     <script>
-        let socket = io();
+        const socket = io();
+        let myID = '';
+        const IDInput = document.querySelector('.ID-box > input');
+        const nameSelect = document.querySelector('.name');
 
         socket.on('connected', (obj) => {
-            console.log(`${obj.id}: ${obj.message}`);
+            if (myID === '') {
+                console.log(`${obj.id}: ${obj.message}`);
+                myID = obj.id;
+                console.log(myID);
+            }
+        });
+        socket.on('verify-classroom-id', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                if (obj.message === 'success') {
+                    // 新增新的 <option> 至 <select class=name>
+                    nameSelect.innerHTML = '';
+                    for (let i = 0; i < obj.studentNames.length; i++) {
+                        const nameOption = document.createElement('option');
+                        nameOption.value = obj.studentNames[i];
+                        nameOption.innerText = obj.studentNames[i];
+                        nameSelect.appendChild(nameOption);
+                    }
+                } else if (obj.message === 'fail') {
+                    // 清空 nameSelect，並 alert 無此教室 ID
+                    nameSelect.innerHTML = '';
+                    alert("無此教室 ID，請重新輸入");
+                }
+            }
+        });
+
+        IDInput.addEventListener('keyup', () => {
+            if (IDInput.value.length === 6) {
+                // 輸入長度為 6 位數時，發送 verify-classroom-id 事件
+                socket.emit('verify-classroom-id', IDInput.value);
+            } else if (IDInput.value.length > 6) {
+                // 限制輸入長度為 6 位數
+                IDInput.value = IDInput.value.slice(0, 6);
+            } else {
+                // 輸入長度小於 6 位數時，清空 nameSelect
+                nameSelect.innerHTML = '';
+            }
         });
     </script>
 </body>
