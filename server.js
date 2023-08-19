@@ -7,6 +7,17 @@ const io = new Server(server);
 const port = 3000;
 
 
+/* Communicate with student-login.html */
+function verifyClassroomID() { }
+
+/* Communicate with teacher-login.html */
+function createClassroom() { }
+
+function createRandomClassroomID() { }
+
+function getAvailableClassroom() { }
+
+
 app.get('/student', (req, res) => {
     res.sendFile(__dirname + '/views/student-login.html');
 });
