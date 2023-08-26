@@ -189,7 +189,6 @@
             cursor: pointer;
             background-color: #3b3b3b;
         }
-
     </style>
     <title>老師登入頁面</title>
 </head>
@@ -210,12 +209,7 @@
         <!-- container for 可選擇的教室編號 -->
         <div id="choose-exist-classroom-numbers-container">
             <!-- 多個 6 位數編號區塊，區塊分布為 3 欄 1 列 -->
-            <div class="classroom-number">450126</div>
-            <div class="classroom-number">512636</div>
-            <div class="classroom-number">246122</div>
-            <div class="classroom-number">123456</div>
-            <div class="classroom-number">234567</div>
-            <div class="classroom-number">345678</div>
+            <!-- <div class="classroom-number"></div> -->
         </div>
     </div>
 
@@ -233,7 +227,7 @@
                 <!-- title 「隨機教室 ID」 -->
                 <div id="random-classroom-number-title">隨機教室 ID</div>
                 <!-- 隨機教室 ID 展示 -->
-                <div id="random-classroom-number">345678</div>
+                <div id="random-classroom-number"></div>
             </div>
             <!-- container 右方區塊 -->
             <div id="create-new-classrooms-function-container-right">
@@ -251,6 +245,76 @@
             value="新建教室"
         >
     </div>
+    <script
+        src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js'
+        integrity='sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=='
+        crossorigin='anonymous'
+    ></script>
+    <script>
+        const socket = io();
+        let myID = '';
+
+        socket.on('connected', (obj) => {
+            if (myID === '') {
+                console.log(`${obj.id}: ${obj.message}`);
+                myID = obj.id;
+                console.log(myID);
+                // 當確認老師頁面連線成功後，向 server 端發送訊息以取得一組隨機教室 ID
+                socket.emit('create-random-classroom-id', { id: myID });
+                socket.emit('get-available-classroom', { id: myID });
+            }
+        });
+        socket.on('create-random-classroom-id', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                // 將隨機教室 ID 顯示在頁面上
+                document.querySelector('#random-classroom-number').innerText = obj.randomClassroomID;
+            }
+        });
+        socket.on('get-available-classroom', (obj) => {
+            const chooseExistClassroomNumbersContainer = document.querySelector('#choose-exist-classroom-numbers-container');
+            chooseExistClassroomNumbersContainer.innerHTML = '';
+            if (obj.classroomIDs.length > 0) {
+                // 將可選擇的教室編號顯示在頁面上
+                for (let i = 0; i < obj.classroomIDs.length; i++) {
+                    const classroomNumber = document.createElement('div');
+                    classroomNumber.classList.add('classroom-number');
+                    classroomNumber.innerText = obj.classroomIDs[i];
+                    chooseExistClassroomNumbersContainer.appendChild(classroomNumber);
+                }
+            } else {
+                // 顯示「無可選擇的教室」
+                const classroomNumber = document.createElement('div');
+                classroomNumber.classList.add('classroom-number');
+                classroomNumber.innerText = '無可選擇的教室';
+                chooseExistClassroomNumbersContainer.appendChild(classroomNumber);
+            }
+        });
+        socket.on('create-classroom', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                // 向使用者們更新可選擇的教室編號
+                socket.emit('get-available-classroom', { id: myID });
+                // 跳轉至教室頁面，路由為 /TEACHer/:obj.classroomID
+                alert(`${obj.classroomID} 教室已建立，請前往教室頁面`);
+                window.location.href = `/TEACHer/${obj.classroomID}`;
+            }
+        });
+
+        // 點擊「新建教室」按鈕時，向 server 端發送訊息以建立新教室
+        document.querySelector('#create-new-classroom-button').addEventListener('click', () => {
+            const studentListTextarea = document.querySelector('#student-list-textarea');
+            const studentNames = studentListTextarea.value.split('\n');
+            const randomClassroomID = document.querySelector('#random-classroom-number').innerText;
+            socket.emit('create-classroom', {
+                id: myID,
+                classroomID: randomClassroomID,
+                studentNames: studentNames
+            });
+        });
+
+        // TODO: 點級現存教室 ID 後，畫面跳轉至 /TEACHer/:obj.classroomID
+    </script>
 </body>
 
 </html>

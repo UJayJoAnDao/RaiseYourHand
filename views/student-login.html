@@ -1,17 +1,20 @@
 <html>
+
 <head>
     <title>學生登入</title>
     <meta charset="utf-8">
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
+
         body {
             background-color: #D9D9D9;
             display: flex;
             justify-content: center;
         }
+
         .student-login-page {
             margin: 10px auto;
             border-radius: 10px;
@@ -20,6 +23,7 @@
             align-items: center;
             justify-content: center;
         }
+
         h1 {
             text-align: center;
             font-size: 45px;
@@ -27,6 +31,7 @@
             margin: 0;
             padding: 0;
         }
+
         .form-group {
             margin: 100px auto;
             padding: 0px;
@@ -35,14 +40,18 @@
             justify-content: center;
             font-weight: bold;
         }
-        .ID-box , .name-box{
+
+        .ID-box,
+        .name-box {
             font-size: 20px;
             display: flex;
-            justify-content:flex-end;
+            justify-content: flex-end;
             margin: 0px 0px 0px 0px;
             padding: 5px 0 5px 0;
         }
-        .ID , .name{
+
+        .ID,
+        .name {
             margin: 0 0 0 20px;
             height: 30px;
             width: 150px;
@@ -52,6 +61,7 @@
             border: none;
             box-shadow: 2px 3px 5px 0.5px #888888;
         }
+
         input[type=button] {
             display: block;
             background-color: #000000;
@@ -65,24 +75,84 @@
         }
     </style>
 </head>
+
 <body>
     <div class="student-login-page">
         <h1>Raise Your 🖐</h1>
         <div class="form-group">
             <div class="ID-box">
                 <label for="ID">輸入教室 ID</label>
-                <input type="number" class="ID" value="128126">    
+                <input
+                    type="number"
+                    class="ID"
+                    value=""
+                >
             </div>
             <div class="name-box">
                 <label for="name">選擇你的姓名</label>
                 <select class="name">
-                    <option value=""></option>
-                    <option value="張猛">張猛</option>
-                    <option value="王大頭">王大頭</option>
+                    <!-- <option value=""></option> -->
                 </select>
             </div>
         </div>
-        <input type="button" value="加入教室">
+        <input
+            type="button"
+            value="加入教室"
+        >
     </div>
+    <script
+        src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js'
+        integrity='sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=='
+        crossorigin='anonymous'
+    ></script>
+    <script>
+        const socket = io();
+        let myID = '';
+        const IDInput = document.querySelector('.ID-box > input');
+        const nameSelect = document.querySelector('.name');
+
+        socket.on('connected', (obj) => {
+            if (myID === '') {
+                console.log(`${obj.id}: ${obj.message}`);
+                myID = obj.id;
+                console.log(myID);
+            }
+        });
+        socket.on('verify-classroom-id', (obj) => {
+            // 如果 obj.id === myID，則代表此訊息是要傳給我
+            if (obj.id === myID) {
+                if (obj.message === 'success') {
+                    // 新增新的 <option> 至 <select class=name>
+                    nameSelect.innerHTML = '';
+                    for (let i = 0; i < obj.studentNames.length; i++) {
+                        const nameOption = document.createElement('option');
+                        nameOption.value = obj.studentNames[i];
+                        nameOption.innerText = obj.studentNames[i];
+                        nameSelect.appendChild(nameOption);
+                    }
+                } else if (obj.message === 'fail') {
+                    // 清空 nameSelect，並 alert 無此教室 ID
+                    nameSelect.innerHTML = '';
+                    alert("無此教室 ID，請重新輸入");
+                }
+            }
+        });
+
+        IDInput.addEventListener('keyup', () => {
+            if (IDInput.value.length === 6) {
+                // 輸入長度為 6 位數時，發送 verify-classroom-id 事件
+                socket.emit('verify-classroom-id', IDInput.value);
+            } else if (IDInput.value.length > 6) {
+                // 限制輸入長度為 6 位數
+                IDInput.value = IDInput.value.slice(0, 6);
+            } else {
+                // 輸入長度小於 6 位數時，清空 nameSelect
+                nameSelect.innerHTML = '';
+            }
+        });
+
+        // TODO: 輸入正確教室 ID、選擇自己的姓名後，點擊「加入教室」按鈕，畫面跳轉至 /student/:classroomID
+    </script>
 </body>
+
 </html>
